@@ -1,0 +1,1 @@
+java -jar target/ApiAngular-0.0.1.jar
