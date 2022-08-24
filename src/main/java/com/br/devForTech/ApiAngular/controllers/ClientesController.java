@@ -2,6 +2,7 @@ package com.br.devForTech.ApiAngular.controllers;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.br.devForTech.ApiAngular.models.Cliente;
 
+@CrossOrigin("*")
 @RestController
 public class ClientesController {
     @GetMapping("/clientes.json")
@@ -25,7 +27,7 @@ public class ClientesController {
         return cliente;
     }
 
-    @PostMapping("/clientes/{id}.json")
+    @GetMapping("/clientes/{id}.json")
     public Cliente create(@PathVariable int id){
         var cliente = buscaPorId(id);
         return cliente;
