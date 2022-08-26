@@ -2,6 +2,7 @@ package com.br.devForTech.ApiAngular.controllers;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.br.devForTech.ApiAngular.modelViews.Erro;
 import com.br.devForTech.ApiAngular.models.Cliente;
 
 @CrossOrigin("*")
@@ -21,10 +23,23 @@ public class ClientesController {
     }
 
     @PostMapping("/clientes.json")
-    public Cliente create(@RequestBody Cliente cliente){
+    public ResponseEntity<Object> create(@RequestBody Cliente cliente){
         cliente.setId(Cliente.todos().size() + 1);
+
+        if(cliente.getNome() == null || cliente.getNome().isEmpty()){
+            return ResponseEntity.status(400).body(new Erro("O nome é obrigatório"));
+        }
+
+        if(cliente.getEmail() == null || cliente.getEmail().isEmpty()){
+            return ResponseEntity.status(400).body(new Erro("O email é obrigatório"));
+        }
+
+        if(cliente.getSenha() == null || cliente.getSenha().isEmpty()){
+            return ResponseEntity.status(400).body(new Erro("O senha é obrigatório"));
+        }
+
         Cliente.add(cliente);
-        return cliente;
+        return ResponseEntity.status(200).body(cliente);
     }
 
     @GetMapping("/clientes/{id}.json")
